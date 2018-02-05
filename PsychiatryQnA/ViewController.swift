@@ -155,6 +155,10 @@ extension ViewController: SFSpeechRecognizerDelegate {
         let answer = answerArray[i]
         self.numberIs.text = answer
         // Cancel the previous task if it's running.
+     
+        
+        
+        
         if let recognitionTask = recognitionTask {
             recognitionTask.cancel()
             self.recognitionTask = nil
@@ -180,12 +184,16 @@ extension ViewController: SFSpeechRecognizerDelegate {
             if let result = result {
                 self.speechTextView.text = result.bestTranscription.formattedString
                 //  self.answerIs.text  = result.bestTranscription.formattedString
+              
+                
                 self.answerInString = result.bestTranscription.formattedString
                 if answer == self.answerInString && self.answerInString != nil  {
                     self.rightOrWrong.text = "You are right" + self.answerInString!
                 }else if answer != self.answerInString && self.answerInString != nil {
                     self.rightOrWrong.text = "Wrong !!!!" + self.answerInString!
                 }
+               
+                
                 self.audioEngine.stop()
                 recognitionRequest.endAudio()
                 self.recordButton.isEnabled = false
@@ -213,6 +221,9 @@ extension ViewController: SFSpeechRecognizerDelegate {
         try audioEngine.start()
         self.speechTextView.text = "(listening...)"
     }
+    
+ 
+    
     
     private     func clickOnAction(){
         if audioEngine.isRunning {

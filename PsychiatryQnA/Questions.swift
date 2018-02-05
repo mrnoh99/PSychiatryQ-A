@@ -7,27 +7,41 @@
 //
 
 import Foundation
-
 import AVFoundation
 import MediaPlayer
 
 struct Questions {
    
-    var questionDic: [String: Int] = [
-    "1":1,
-    "2":2,
-    "3":3,
-    "4":4,
-    "5":5
-    ]
+    let questionDic: [String : Int] = ["1":1,"2":2,"3":3,"4":4,"5":5]
+ 
+}
+
+func makeQuestionCassette() -> (AVQueuePlayer, [String:Int], [String]) {
+    let questions = Questions()
+    let questionDic = questions.questionDic
     
     
+    let queplayer = AVQueuePlayer()
+    let questionArray = uniqueRandoms(numberOfRandoms: questionDic.count, minNum: 1, maxNum: UInt32(questionDic.count))
     
     
-func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
-        var uniqueNumbers = Set<Int>()
+    for item in questionArray {
+        let urlPath = Bundle.main.path(forResource: item, ofType:"mp3")
+        let fileURL = NSURL(fileURLWithPath:urlPath!)
+        let playerItem = AVPlayerItem(url:fileURL as URL)
+        queplayer.insert(playerItem, after:nil)
+        
+        
+    }
+   return (queplayer, questionDic, questionArray)
+  
+    
+}
+
+func uniqueRandoms(numberOfRandoms: Int, minNum: Int , maxNum: UInt32) -> [String] {
+        var uniqueNumbers = Set<String>()
         while uniqueNumbers.count < numberOfRandoms {
-            uniqueNumbers.insert(Int(arc4random_uniform(maxNum + 1)) + minNum)
+            uniqueNumbers.insert(String(Int(arc4random_uniform(maxNum + 1)) + minNum))
         }
         return Array(uniqueNumbers).shuffle
     }
@@ -37,7 +51,7 @@ func uniqueRandoms(numberOfRandoms: Int, minNum: Int, maxNum: UInt32) -> [Int] {
  
     
     
-}
+
 
 extension Array {
     var shuffle:[Element] {

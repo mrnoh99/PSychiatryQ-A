@@ -13,6 +13,7 @@
 		06FE3FF01D9459840031E58B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06FE3FEF1D9459840031E58B /* Assets.xcassets */; };
 		06FE3FF31D9459850031E58B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06FE3FF11D9459850031E58B /* LaunchScreen.storyboard */; };
 		06FE3FFB1D945F1B0031E58B /* Song.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 06FE3FFA1D945F1B0031E58B /* Song.mp3 */; };
+		7C5A60212027FB09008B7D48 /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5A60202027FB09008B7D48 /* Questions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		06FE3FF21D9459850031E58B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06FE3FF41D9459850031E58B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06FE3FFA1D945F1B0031E58B /* Song.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Song.mp3; sourceTree = "<group>"; };
+		7C5A60202027FB09008B7D48 /* Questions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				06FE3FE81D9459840031E58B /* AppDelegate.swift */,
 				06FE3FEA1D9459840031E58B /* ViewController.swift */,
+				7C5A60202027FB09008B7D48 /* Questions.swift */,
 				06FE3FEC1D9459840031E58B /* Main.storyboard */,
 				06FE3FEF1D9459840031E58B /* Assets.xcassets */,
 				06FE3FFA1D945F1B0031E58B /* Song.mp3 */,
@@ -100,6 +103,7 @@
 					06FE3FE41D9459840031E58B = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 9AWEB9NYHH;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -141,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C5A60212027FB09008B7D48 /* Questions.swift in Sources */,
 				06FE3FEB1D9459840031E58B /* ViewController.swift in Sources */,
 				06FE3FE91D9459840031E58B /* AppDelegate.swift in Sources */,
 			);
@@ -282,7 +287,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JaiSungNOH.psychiatryQnA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -295,7 +301,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JaiSungNOH.psychiatryQnA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

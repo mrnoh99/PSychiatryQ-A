@@ -22,7 +22,11 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var numberIs: UILabel!
     @IBOutlet weak var answerIs: UILabel!
-    var answerInString: String?
+    var answerInString: String? {
+        willSet {
+            answerIs.text = newValue
+        }
+    }
     
     @IBOutlet weak var rightOrWrong: UILabel!
     private var speechRecognizer: SFSpeechRecognizer!
@@ -37,14 +41,10 @@ class ViewController: UIViewController {
         self.recordButton.isEnabled = false
         prepareRecognizer(locale: defaultLocale)
         
+       
         
     }
-    
    
-    
-    
-    
-    
     
     private func prepareRecognizer(locale: Locale) {
         speechRecognizer = SFSpeechRecognizer(locale: locale)!
@@ -78,6 +78,9 @@ class ViewController: UIViewController {
                 }
             }
         }
+       
+        clickOnAction()
+       
     }
     
     
@@ -106,24 +109,46 @@ class ViewController: UIViewController {
                 player.play()
                 self.playButton.setTitle("Pause", for: .normal)
             }
-        }
+     }
+       
+        
+        
+        
     }
     
     
     @IBAction func didClickOnRecordButton(_ sender: AnyObject) {
         
-        
+       
+            
         if audioEngine.isRunning {
             audioEngine.stop()
             recognitionRequest?.endAudio()
             self.recordButton.isEnabled = false
             self.recordButton.setTitle("Stopping", for: .disabled)
         } else {
-            try! startRecording()
+             try! startRecording()
+            
             self.recordButton.setTitle("Stop recording", for: [])
         }
     }
+     
+ 
     
+   
+}
+
+extension ViewController: SFSpeechRecognizerDelegate {
+    public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+        if available {
+            self.recordButton.isEnabled = true
+            self.recordButton.setTitle("Start Recording", for: [])
+        } else {
+            self.recordButton.isEnabled = false
+            self.recordButton.setTitle("Recognition is not available", for: .disabled)
+        }
+    }
+   
     private func startRecording() throws {
         let answerArray = ["Number one", "Number two","Number three","Number four" ]
         let i = Int(arc4random_uniform(3))
@@ -142,11 +167,11 @@ class ViewController: UIViewController {
         
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
         
-        guard let inputNode = audioEngine.inputNode else { fatalError("Audio engine has no input") }
+        let inputNode = audioEngine.inputNode
         guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
         
         // Configure request so that results are returned before audio recording is finished
-        recognitionRequest.shouldReportPartialResults = false
+        recognitionRequest.shouldReportPartialResults = true
         
         // A recognition task represents a speech recognition session.
         // We keep a reference to the task so that it can be cancelled.
@@ -154,14 +179,17 @@ class ViewController: UIViewController {
             var isFinal = false
             if let result = result {
                 self.speechTextView.text = result.bestTranscription.formattedString
-                self.answerIs.text  = result.bestTranscription.formattedString
+                //  self.answerIs.text  = result.bestTranscription.formattedString
                 self.answerInString = result.bestTranscription.formattedString
                 if answer == self.answerInString && self.answerInString != nil  {
                     self.rightOrWrong.text = "You are right" + self.answerInString!
                 }else if answer != self.answerInString && self.answerInString != nil {
                     self.rightOrWrong.text = "Wrong !!!!" + self.answerInString!
                 }
-                
+                self.audioEngine.stop()
+                recognitionRequest.endAudio()
+                self.recordButton.isEnabled = false
+                self.recordButton.setTitle("Stopping", for: .disabled)
                 isFinal = result.isFinal
             }
             
@@ -186,19 +214,17 @@ class ViewController: UIViewController {
         self.speechTextView.text = "(listening...)"
     }
     
-    
-}
-
-extension ViewController: SFSpeechRecognizerDelegate {
-    public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
-        if available {
-            self.recordButton.isEnabled = true
-            self.recordButton.setTitle("Start Recording", for: [])
-        } else {
+    private     func clickOnAction(){
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            recognitionRequest?.endAudio()
             self.recordButton.isEnabled = false
-            self.recordButton.setTitle("Recognition is not available", for: .disabled)
-        }
+            self.recordButton.setTitle("Stopping", for: .disabled)
+        } else {
+            try! startRecording()
+            
+            self.recordButton.setTitle("Stop recording", for: [])        }
+        
+        
     }
-    
-    
 }
